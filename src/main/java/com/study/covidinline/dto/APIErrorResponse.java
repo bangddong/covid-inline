@@ -3,6 +3,9 @@ package com.study.covidinline.dto;
 import com.study.covidinline.constant.ErrorCode;
 import lombok.*;
 
+/**
+ * 공통 response
+ */
 @Getter
 @ToString
 @EqualsAndHashCode
