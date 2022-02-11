@@ -4,7 +4,7 @@ import com.study.covidinline.constant.ErrorCode;
 import lombok.*;
 
 /**
- * 공통 response
+ * 공통 Error response
  */
 @Getter
 @ToString
