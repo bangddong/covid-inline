@@ -1,21 +1,22 @@
 package com.study.covidinline.controller.api;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.study.covidinline.dto.APIDataResponse;
+import com.study.covidinline.dto.AdminRequest;
+import com.study.covidinline.dto.LoginRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api")
 @RestController
 public class APIAuthController {
 
-    @GetMapping("/sign-up")
-    public String signUp() {
-        return "done.";
+    @PostMapping("/sign-up")
+    public APIDataResponse<String> signUp(@RequestBody AdminRequest adminRequest) {
+        return APIDataResponse.empty();
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "done.";
+    @PostMapping("/login")
+    public APIDataResponse<String> login(@RequestBody LoginRequest loginRequest) {
+        return APIDataResponse.empty();
     }
 
 }
