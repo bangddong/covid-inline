@@ -1,7 +1,9 @@
 package com.study.covidinline.service;
 
+import com.study.covidinline.constant.ErrorCode;
 import com.study.covidinline.constant.EventStatus;
 import com.study.covidinline.dto.EventDTO;
+import com.study.covidinline.exception.GeneralException;
 import com.study.covidinline.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,17 @@ public class EventService {
             LocalDateTime eventStartDatetime,
             LocalDateTime eventEndDatetime
     ) {
-        return eventRepository.findEvents(placeId, eventName, eventStatus, eventStartDatetime, eventEndDatetime);
+        try {
+            return eventRepository.findEvents(
+                    placeId,
+                    eventName,
+                    eventStatus,
+                    eventStartDatetime,
+                    eventEndDatetime
+            );
+        } catch (Exception e) {
+            throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
+        }
     }
 
     public Optional<EventDTO> getEvent(Long eventId) {
