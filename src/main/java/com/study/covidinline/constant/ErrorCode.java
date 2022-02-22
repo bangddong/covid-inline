@@ -33,7 +33,7 @@ public enum ErrorCode {
     private final String message;
 
     // basic exception message
-    public String getMessage(Exception e) {
+    public String getMessage(Throwable e) {
         return getMessage(this.getMessage() + " - " + e.getMessage());
     }
 
