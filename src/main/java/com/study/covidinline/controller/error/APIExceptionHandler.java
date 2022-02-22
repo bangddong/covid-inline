@@ -3,6 +3,7 @@ package com.study.covidinline.controller.error;
 import com.study.covidinline.constant.ErrorCode;
 import com.study.covidinline.dto.APIErrorResponse;
 import com.study.covidinline.exception.GeneralException;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolationException;
 
-@RestControllerAdvice(annotations = RestController.class) // RestController 만 Advice 하겠음
+@RestControllerAdvice(annotations = {RestController.class, RepositoryRestController.class})
 public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
-        return getInternalResponseEntity(
+        return handleExceptionInternal(
                 e, ErrorCode.VALIDATION_ERROR, HttpHeaders.EMPTY, HttpStatus.BAD_REQUEST, request
         );
     }
@@ -31,13 +32,13 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.BAD_REQUEST :
                 HttpStatus.INTERNAL_SERVER_ERROR;
 
-        return getInternalResponseEntity(e, errorCode, HttpHeaders.EMPTY, status, request);
+        return handleExceptionInternal(e, errorCode, HttpHeaders.EMPTY, status, request);
 
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> exception(Exception e, WebRequest request) {
-        return getInternalResponseEntity(e, ErrorCode.INTERNAL_ERROR, HttpHeaders.EMPTY, HttpStatus.INTERNAL_SERVER_ERROR, request);
+        return handleExceptionInternal(e, ErrorCode.INTERNAL_ERROR, HttpHeaders.EMPTY, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
     /**
@@ -52,10 +53,10 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
                 ErrorCode.SPRING_BAD_REQUEST :
                 ErrorCode.SPRING_INTERNAL_ERROR;
 
-       return getInternalResponseEntity(ex, errorCode, headers, status, request);
+       return handleExceptionInternal(ex, errorCode, headers, status, request);
    }
 
-    private ResponseEntity<Object> getInternalResponseEntity(
+    private ResponseEntity<Object> handleExceptionInternal(
             Exception e, ErrorCode errorCode, HttpHeaders headers, HttpStatus status, WebRequest request
     ) {
         return super.handleExceptionInternal(
