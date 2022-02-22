@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -218,7 +219,7 @@ class EventServiceTest {
         assertThat(result).isTrue();
         then(eventRepository).should().deleteEvent(eventId);
     }
-    @DisplayName("이벤트 ID를 주지 않으면 삭제 중단하고 결과를 fasle 로 보여준다.")
+    @DisplayName("이벤트 ID를 주지 않으면 삭제 중단하고 결과를 false 로 보여준다.")
     @Test
     void givenNothing_whenDeleting_then_AbortsDeletingAndReturnFalse() {
         //given
@@ -253,6 +254,7 @@ class EventServiceTest {
             LocalDateTime eventEndDatetime
     ) {
         return EventDTO.of(
+                1L,
                 placeId,
                 eventName,
                 eventStatus,
@@ -265,4 +267,5 @@ class EventServiceTest {
                 LocalDateTime.now()
         );
     }
+
 }
