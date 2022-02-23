@@ -32,7 +32,6 @@ public class AdminPlaceMap {
     @Setter
     @Column(nullable = false)
     private Long adminId;
-    private Long PlaceId;
 
     @Setter
     @Column(nullable = false)
