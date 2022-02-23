@@ -5,8 +5,8 @@ import com.study.covidinline.dto.AdminRequest;
 import com.study.covidinline.dto.LoginRequest;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api")
-@RestController
+//@RequestMapping("/api")
+//@RestController
 public class APIAuthController {
 
     @PostMapping("/sign-up")

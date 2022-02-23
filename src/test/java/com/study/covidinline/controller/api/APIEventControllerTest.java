@@ -6,6 +6,7 @@ import com.study.covidinline.constant.EventStatus;
 import com.study.covidinline.dto.EventDTO;
 import com.study.covidinline.dto.EventResponse;
 import com.study.covidinline.service.EventService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Disabled("API 컨트롤러가 필요 없는 상황임")
+@DisplayName("API 컨트롤러 - 이벤트")
 @WebMvcTest(APIEventController.class)
 class APIEventControllerTest {
 
