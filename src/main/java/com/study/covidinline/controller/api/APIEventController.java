@@ -17,6 +17,11 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Spring Data REST 사용중으로 당장은 필요가 없음.
+ * 필요에 따라 살릴 예정
+ */
+@Deprecated
 //@Validated
 @RequiredArgsConstructor
 //@RequestMapping("/api")
