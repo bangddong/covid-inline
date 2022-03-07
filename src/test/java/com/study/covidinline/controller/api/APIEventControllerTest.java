@@ -3,8 +3,10 @@ package com.study.covidinline.controller.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.covidinline.constant.ErrorCode;
 import com.study.covidinline.constant.EventStatus;
+import com.study.covidinline.constant.PlaceType;
 import com.study.covidinline.dto.EventDTO;
 import com.study.covidinline.dto.EventResponse;
+import com.study.covidinline.dto.PlaceDTO;
 import com.study.covidinline.service.EventService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -110,7 +112,7 @@ class APIEventControllerTest {
         //given
         EventResponse eventResponse = EventResponse.of(
                 1L,
-                1L,
+                createPlaceDTO(1L),
                 "오후 운동",
                 EventStatus.OPENED,
                 LocalDateTime.of(2021, 1, 1, 13, 0, 0),
@@ -142,7 +144,7 @@ class APIEventControllerTest {
         //given
         EventResponse eventResponse = EventResponse.of(
                 1L,
-                0L,
+                createPlaceDTO(0L),
                 "   ",
                 null,
                 null,
@@ -235,7 +237,7 @@ class APIEventControllerTest {
         long eventId = 1L;
         EventResponse eventResponse = EventResponse.of(
                 eventId,
-                1L,
+                createPlaceDTO(1L),
                 "오후 운동",
                 EventStatus.OPENED,
                 LocalDateTime.of(2021, 1, 1, 13, 0, 0),
@@ -268,7 +270,7 @@ class APIEventControllerTest {
         long eventId = 0L;
         EventResponse eventResponse = EventResponse.of(
                 eventId,
-                0L,
+                createPlaceDTO(0L),
                 "  ",
                 null,
                 null,
@@ -328,7 +330,7 @@ class APIEventControllerTest {
     private EventDTO createEventDTO() {
         return EventDTO.of(
                 1L,
-                1L,
+                createPlaceDTO(1L),
                 "오후 운동",
                 EventStatus.OPENED,
                 LocalDateTime.of(2021, 1, 1, 13, 0, 0),
@@ -336,6 +338,20 @@ class APIEventControllerTest {
                 0,
                 24,
                 "마스크 꼭 착용하세요",
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+    }
+
+    private PlaceDTO createPlaceDTO(Long placeId) {
+        return PlaceDTO.of(
+                placeId,
+                PlaceType.COMMON,
+                "배드민턴장",
+                "서울시 가나구 다라동",
+                "010-1111-2222",
+                10,
+                null,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );

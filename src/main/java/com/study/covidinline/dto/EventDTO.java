@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public record EventDTO(
         Long id,
-        Long placeId,
+        PlaceDTO placeDTO,
         String eventName,
         EventStatus eventStatus,
         LocalDateTime eventStartDatetime,
@@ -22,7 +22,7 @@ public record EventDTO(
 
     public static EventDTO of(
             Long id,
-            Long placeId,
+            PlaceDTO placeDTO,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
@@ -35,7 +35,7 @@ public record EventDTO(
     ) {
         return new EventDTO(
                 id,
-                placeId,
+                placeDTO,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
@@ -51,7 +51,7 @@ public record EventDTO(
     public static EventDTO of(Event event) {
         return new EventDTO(
                 event.getId(),
-                event.getPlace().getId(),
+                PlaceDTO.of(event.getPlace()),
                 event.getEventName(),
                 event.getEventStatus(),
                 event.getEventStartDatetime(),
