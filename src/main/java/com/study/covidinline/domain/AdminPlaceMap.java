@@ -8,11 +8,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-@Data
 @Getter
 @ToString
-@EqualsAndHashCode
 @Table(indexes = {
         @Index(columnList = "adminId"),
         @Index(columnList = "placeId"),
@@ -23,7 +22,6 @@ import java.time.LocalDateTime;
 @Entity
 public class AdminPlaceMap {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,6 +56,18 @@ public class AdminPlaceMap {
 
     public static AdminPlaceMap of(Long adminId, Long placeId) {
         return new AdminPlaceMap(adminId, placeId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        return id != null && id.equals(((AdminPlaceMap) obj).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(placeId, adminId, createdAt, modifiedAt);
     }
 
 }
