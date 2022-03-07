@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class BaseExceptionHandlerTest {
 
