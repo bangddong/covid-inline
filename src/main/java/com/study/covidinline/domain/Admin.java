@@ -49,6 +49,7 @@ public class Admin {
     @Setter
     private String memo;
 
+    /** 롬복에서의 순환 참조를 방지하기위해 Exclude */
     @ToString.Exclude
     @OrderBy("id")
     @OneToMany(mappedBy = "admin")
