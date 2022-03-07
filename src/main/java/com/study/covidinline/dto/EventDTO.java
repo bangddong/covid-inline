@@ -2,6 +2,7 @@ package com.study.covidinline.dto;
 
 import com.study.covidinline.constant.EventStatus;
 import com.study.covidinline.domain.Event;
+import com.study.covidinline.domain.Place;
 
 import java.time.LocalDateTime;
 
@@ -50,7 +51,7 @@ public record EventDTO(
     public static EventDTO of(Event event) {
         return new EventDTO(
                 event.getId(),
-                event.getPlaceId(),
+                event.getPlace().getId(),
                 event.getEventName(),
                 event.getEventStatus(),
                 event.getEventStartDatetime(),
@@ -63,9 +64,9 @@ public record EventDTO(
         );
     }
 
-    public Event toEntity() {
+    public Event toEntity(Place place) {
         return Event.of(
-                placeId,
+                place,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
@@ -77,7 +78,6 @@ public record EventDTO(
     }
 
     public Event updateEntity(Event event) {
-        if (placeId != null) { event.setPlaceId(placeId); }
         if (eventName != null) { event.setEventName(eventName); }
         if (eventStatus != null) { event.setEventStatus(eventStatus); }
         if (eventStartDatetime != null) { event.setEventStartDatetime(eventStartDatetime); }
