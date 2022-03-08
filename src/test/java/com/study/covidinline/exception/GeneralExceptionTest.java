@@ -38,6 +38,8 @@ class GeneralExceptionTest {
                 arguments(new GeneralException(msg, t), msg, ErrorCode.INTERNAL_ERROR),
                 arguments(new GeneralException(t), "Internal error - " + t.getMessage(), ErrorCode.INTERNAL_ERROR),
                 arguments(new GeneralException(errorCode), errorCode.getMessage(), errorCode),
+                arguments(new GeneralException(errorCode, msg), msg, errorCode),
+                arguments(new GeneralException(errorCode, msg, t), msg, errorCode, errorCode),
                 arguments(new GeneralException(errorCode, t), errorCode.getMessage() + " - " + t.getMessage(), errorCode)
         );
     }
