@@ -21,24 +21,18 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
         return handleExceptionInternal(
-                e, ErrorCode.VALIDATION_ERROR, HttpHeaders.EMPTY, HttpStatus.BAD_REQUEST, request
+                e, ErrorCode.VALIDATION_ERROR, request
         );
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> general(GeneralException e, WebRequest request) {
-        ErrorCode errorCode = e.getErrorCode();
-        HttpStatus status = errorCode.isClientSideError() ?
-                HttpStatus.BAD_REQUEST :
-                HttpStatus.INTERNAL_SERVER_ERROR;
-
-        return handleExceptionInternal(e, errorCode, HttpHeaders.EMPTY, status, request);
-
+        return handleExceptionInternal(e, e.getErrorCode(), request);
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> exception(Exception e, WebRequest request) {
-        return handleExceptionInternal(e, ErrorCode.INTERNAL_ERROR, HttpHeaders.EMPTY, HttpStatus.INTERNAL_SERVER_ERROR, request);
+        return handleExceptionInternal(e, ErrorCode.INTERNAL_ERROR, request);
     }
 
     /**
@@ -49,12 +43,12 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(
             Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request
     ) {
-        ErrorCode errorCode = status.is4xxClientError() ?
-                ErrorCode.SPRING_BAD_REQUEST :
-                ErrorCode.SPRING_INTERNAL_ERROR;
-
-       return handleExceptionInternal(ex, errorCode, headers, status, request);
+       return handleExceptionInternal(ex, ErrorCode.valueOf(status), headers, status, request);
    }
+
+    private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorCode errorCode, WebRequest request) {
+        return handleExceptionInternal(e, errorCode, HttpHeaders.EMPTY, errorCode.getHttpStatus(), request);
+    }
 
     private ResponseEntity<Object> handleExceptionInternal(
             Exception e, ErrorCode errorCode, HttpHeaders headers, HttpStatus status, WebRequest request

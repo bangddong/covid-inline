@@ -2,7 +2,7 @@
 <thlogic>
   <attr sel="#eventTitle" th:text="'이벤트 상세'" />
   <attr sel="#eventTable" th:object="${event}">
-    <attr sel="#placeId" th:text="*{placeId}" />
+    <attr sel="#placeName" th:text="*{place.placeName}" />
     <attr sel="#eventName" th:text="*{eventName}" />
     <attr sel="#eventStatus" th:text="*{eventStatus}" />
     <attr sel="#eventStartDatetime" th:text="*{eventStartDatetime}" />

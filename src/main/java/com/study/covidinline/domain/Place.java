@@ -1,18 +1,21 @@
 package com.study.covidinline.domain;
 
 import com.study.covidinline.constant.PlaceType;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 
-@Data
 @Getter
 @ToString
-@EqualsAndHashCode
 @Table(indexes = {
         @Index(columnList = "placeName"),
         @Index(columnList = "address"),
@@ -30,7 +33,7 @@ public class Place {
 
 
     @Setter
-    @Column(nullable = false, columnDefinition = "varchar default 'COMMON'")
+    @Column(nullable = false, columnDefinition = "varchar(20) default 'COMMON'")
     @Enumerated(EnumType.STRING)
     private PlaceType placeType;
 
@@ -53,6 +56,16 @@ public class Place {
 
     @Setter
     private String memo;
+
+    @ToString.Exclude
+    @OrderBy("id")
+    @OneToMany(mappedBy = "place")
+    private final Set<Event> events = new LinkedHashSet<>();
+
+    @ToString.Exclude
+    @OrderBy("id")
+    @OneToMany(mappedBy = "place")
+    private final Set<AdminPlaceMap> adminPlaceMaps = new LinkedHashSet<>();
 
 
     @Column(nullable = false, insertable = false, updatable = false,
@@ -93,6 +106,18 @@ public class Place {
             String memo
     ) {
         return new Place(placeType, placeName, address, phoneNumber, capacity, memo);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        return id != null && id.equals(((Place) obj).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(placeName, address, phoneNumber, createdAt, modifiedAt);
     }
 
 }

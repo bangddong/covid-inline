@@ -3,9 +3,11 @@ package com.study.covidinline.service;
 import com.querydsl.core.types.Predicate;
 import com.study.covidinline.constant.ErrorCode;
 import com.study.covidinline.constant.EventStatus;
+import com.study.covidinline.domain.Place;
 import com.study.covidinline.dto.EventDTO;
 import com.study.covidinline.exception.GeneralException;
 import com.study.covidinline.repository.EventRepository;
+import com.study.covidinline.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.stream.StreamSupport;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final PlaceRepository placeRepository;
 
     public List<EventDTO> getEvents(Predicate predicate) {
         try {
@@ -58,7 +61,9 @@ public class EventService {
                 return false;
             }
 
-            eventRepository.save(eventDTO.toEntity());
+            Place place = placeRepository.findById(eventDTO.placeDTO().id())
+                    .orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND));
+            eventRepository.save(eventDTO.toEntity(place));
             return true;
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
