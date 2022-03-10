@@ -5,10 +5,13 @@ import com.study.covidinline.constant.ErrorCode;
 import com.study.covidinline.constant.EventStatus;
 import com.study.covidinline.domain.Place;
 import com.study.covidinline.dto.EventDTO;
+import com.study.covidinline.dto.EventViewResponse;
 import com.study.covidinline.exception.GeneralException;
 import com.study.covidinline.repository.EventRepository;
 import com.study.covidinline.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,15 +36,23 @@ public class EventService {
         }
     }
 
-    public List<EventDTO> getEvents(
-            Long placeId,
+    public Page<EventViewResponse> getEventViewResponse(
+            String placeName,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
-            LocalDateTime eventEndDatetime
+            LocalDateTime eventEndDatetime,
+            Pageable pageable
     ) {
         try {
-            return null;
+            return eventRepository.findEventViewPageBySearchParams(
+                    placeName,
+                    eventName,
+                    eventStatus,
+                    eventStartDatetime,
+                    eventEndDatetime,
+                    pageable
+            );
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
         }
