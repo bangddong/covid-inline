@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.ComparableExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.study.covidinline.domain.Event;
 import com.study.covidinline.domain.QEvent;
+import com.study.covidinline.repository.querydsl.EventRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -11,6 +12,7 @@ import org.springframework.data.querydsl.binding.QuerydslBindings;
 
 public interface EventRepository extends
         JpaRepository<Event, Long>,
+        EventRepositoryCustom,
         QuerydslPredicateExecutor<Event>,
         QuerydslBinderCustomizer<QEvent> {
 
